@@ -1,3 +1,6 @@
+/*Write a C program in which a parent writes a message to a pipe and
+the child reads the message. It then displays the message to standard
+output device.*/
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
