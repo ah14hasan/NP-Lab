@@ -15,7 +15,14 @@ int main(void) {
     key_t key;
     int msqid;
     struct msgbuf message;
-    long desired_type = 2;   // Change this to 1, 2, or 3 depending on which message you want
+    long desired_type;       // Will be entered by the user
+
+    // Ask user which priority/type to receive
+    printf("Enter the message type (priority) you want to receive (positive long): ");
+    if (scanf("%ld", &desired_type) != 1 || desired_type <= 0) {
+        fprintf(stderr, "Invalid message type.\n");
+        exit(EXIT_FAILURE);
+    }
 
     // Use the same key as in sender.c
     key = ftok(".", 'A');
@@ -31,7 +38,7 @@ int main(void) {
         exit(EXIT_FAILURE);
     }
 
-    // Selective receive: msgtyp > 0 → first message of that specific type is received [web:122][web:136]
+    // Selective receive: msgtyp > 0 → first message of that specific type is received
     if (msgrcv(msqid, &message, sizeof(message.mtext), desired_type, 0) == -1) {
         perror("msgrcv");
         exit(EXIT_FAILURE);
